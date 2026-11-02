@@ -1,0 +1,9 @@
+header-footer:
+  enabled: true
+  designs:
+    default:
+      header:
+        - '&a&lDaimonCraft'
+        - '&7A shared world for exploration'
+      footer:
+        - '&bExplore &8| &aInhabit &8| &eCreate'

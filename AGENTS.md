@@ -2,6 +2,8 @@
 
 Read README.md, docs/design/ARCHITECTURE.md, docs/design/COGNITION.md and
 docs/ROADMAP.md before changing behavior. GitHub Issues own actionable work.
+For the independent development server read docs/SERVER.md. Its native Java
+deployment/operator utility does not select the Rust body client or an LLM.
 
 - This is a new Rust stack. DaemonCraft code, worlds and deployments stay separate.
   Recover its ideas with provenance; do not make old statuses current by copying them.

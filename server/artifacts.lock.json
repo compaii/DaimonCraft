@@ -1,0 +1,70 @@
+{
+  "minecraft": "1.21.11",
+  "java": 21,
+  "resolved_on": "2026-11-02",
+  "artifacts": [
+    {
+      "name": "Purpur",
+      "version": "1.21.11-2568",
+      "destination": "server.jar",
+      "url": "https://api.purpurmc.org/v2/purpur/1.21.11/2568/download",
+      "sha256": "ee199511bf0a970ee8459fe3a351703fec37293f00bc2de1c5cb746c7e4acc34"
+    },
+    {
+      "name": "LuckPerms",
+      "version": "v5.5.17-bukkit",
+      "modrinth_version": "OrIs0S6b",
+      "destination": "plugins/LuckPerms.jar",
+      "url": "https://cdn.modrinth.com/data/Vebnzrzj/versions/OrIs0S6b/LuckPerms-Bukkit-5.5.17.jar",
+      "sha512": "773895644260b338818bfeff0c78f8d4f590f56b0f711c378a4eec91be6e8b37354099b5db1ea5b2dce4c02486213297a6da09675c9bf6f014f9a400b5772cf3"
+    },
+    {
+      "name": "CoreProtect",
+      "version": "24.1",
+      "modrinth_version": "3sehX6Sg",
+      "destination": "plugins/CoreProtect.jar",
+      "url": "https://cdn.modrinth.com/data/Lu3KuzdV/versions/3sehX6Sg/CoreProtect-CE-24.1.jar",
+      "sha512": "76aad727528ddb990bbee5069f8ef3fcd018ae0bcdea89b965be2485e828633eb068672e841be64e550c8474f901a24d8c15c7bd44c2bd6c96244e1e58de0c95"
+    },
+    {
+      "name": "SkinsRestorer",
+      "version": "15.12.0",
+      "modrinth_version": "2PjHGlwd",
+      "destination": "plugins/SkinsRestorer.jar",
+      "url": "https://cdn.modrinth.com/data/TsLS8Py5/versions/2PjHGlwd/SkinsRestorer.jar",
+      "sha512": "789374eeff1b45bfb1a34dd37ebc24de68d69e393f833ccfb6662daa363a04ac33788f620a0bf1f4c75058bfb9a924e46af34458ccdd1b2dbbac73abef87276e"
+    },
+    {
+      "name": "DecentHolograms",
+      "version": "2.9.10",
+      "modrinth_version": "t9gURTWO",
+      "destination": "plugins/DecentHolograms.jar",
+      "url": "https://cdn.modrinth.com/data/w02MKsTg/versions/t9gURTWO/DecentHolograms-2.9.10.jar",
+      "sha512": "451ebac334583d58269cc276459dc499d15f9bf584eb7da97af229ea0be0bbbcd903cbe0c7fe4afe72e6744aa49180c944379279ac98a4963eb551d8a8dbc519"
+    },
+    {
+      "name": "TAB",
+      "version": "6.0.2",
+      "modrinth_version": "FewsxQmS",
+      "destination": "plugins/TAB.jar",
+      "url": "https://cdn.modrinth.com/data/gG7VFbG0/versions/FewsxQmS/TAB%20v6.0.2%20-%20Vanilla.jar",
+      "sha512": "a9818aebfb8a6ab97781da9570cd1f9731e561187126ce0ea51cf27242a022d985bf2bb26f9ef5cbd44be77587b17670af132abcd296e1c8bdede0b1436ba189"
+    },
+    {
+      "name": "Geyser-Spigot",
+      "version": "2.12.1-b1282",
+      "modrinth_version": "twO1I63u",
+      "destination": "plugins/Geyser-Spigot.jar",
+      "url": "https://cdn.modrinth.com/data/wKkoqHrH/versions/twO1I63u/Geyser-Spigot.jar",
+      "sha512": "bb890a3afc7d15a7e407f72b9f69cca7b7a654fcfa447abbd43e9ed58d24165700aad0485c203f08e07648a1de2b33e58863f29ae830c0589216df522dd5e2ea"
+    },
+    {
+      "name": "ViaVersion",
+      "version": "5.12.2",
+      "modrinth_version": "Fkfcr89K",
+      "destination": "plugins/ViaVersion.jar",
+      "url": "https://cdn.modrinth.com/data/P1OZGk5p/versions/Fkfcr89K/ViaVersion-5.12.2.jar",
+      "sha512": "c6af11f50e14bc1ba239f5a90be653cce85feee30c473a4b53336b4d5527d790369cf43843f7cb06d3ac3a34fc207e7203436737ca719070644101472453401b"
+    }
+  ]
+}

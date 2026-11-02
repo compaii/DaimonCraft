@@ -1,0 +1,14 @@
+{
+  "bind": "127.0.0.1",
+  "port": 25565,
+  "rcon_port": 25575,
+  "bedrock_port": 19132,
+  "bedrock_webrtc_port": 19133,
+  "online_mode": false,
+  "whitelist": ["Developer"],
+  "heap_mb": 4096,
+  "data_limit_gib": 8,
+  "free_reserve_gib": 20,
+  "seed": "DaimonCraft-development",
+  "java": "/usr/bin/java"
+}
