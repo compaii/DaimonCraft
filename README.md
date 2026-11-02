@@ -10,6 +10,10 @@ deployment is imported.
 
 ## Working now
 
+- [Automatable development server](docs/SERVER.md): native Purpur 1.21.11,
+  seven pinned plugins, private Java/Bedrock listeners, branded presentation,
+  coordinates and explicit resource/storage bounds. The live server is separate
+  from the offline Rust fixture and does not start an agent.
 - `daimon-harness`: domain-independent model/body interfaces, bounded working
   state, prioritized attention and correlated action evidence.
 - `daimon-minecraft`: a tiny deterministic voxel sandbox for exercising that
@@ -31,7 +35,7 @@ cargo run --locked -p daimoncraft -- inspect .runs/first/session.json
 
 `demo` requires a new directory and refuses to overwrite a previous run.
 The model is scripted and the world is simulated: there is no model charge,
-live player, game login, Matrix enrollment or background service.
+live player, game login or Matrix enrollment in this demo.
 Delete a completed `.runs/first` after inspecting it; preserve any run containing
 unresolved pending state. See [operations](docs/OPERATIONS.md) for bounds.
 

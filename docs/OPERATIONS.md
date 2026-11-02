@@ -1,6 +1,7 @@
 # Operations and bounds
 
-Only an offline fixture exists. Run the README commands in the foreground;
+For the separate live game server use [SERVER.md](SERVER.md). The Rust harness
+currently has an offline fixture. Run its README commands in the foreground;
 they make no network calls, start no service and do not access any credentials.
 
 The demo has twelve decision attempts, eight scripted body actions, a 33×33
@@ -33,7 +34,8 @@ symbols and incremental compilation disabled for this small bootstrap. Reuse it
 for checks; `cargo clean` removes disposable compiled output when no build uses
 it. Retain source, lockfile and unfinished runtime evidence.
 
-Live hosting, game login, model access, authenticated Matrix body registration,
+The game-server receiving deployment is recorded in its owning server task;
+agent game login, model access, authenticated Matrix body registration,
 DMK and boot behavior remain unconfigured. Resolve them from current authorized
 receiving resources when their implementation is selected. A successful offline
 demo does not authorize reactivation of legacy identities/services or model loops.

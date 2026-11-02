@@ -1,0 +1,23 @@
+bedrock:
+  address: '@BIND@'
+  port: @BEDROCK_PORT@
+  webrtc-port: @BEDROCK_WEBRTC_PORT@
+  transport: both
+  signaling:
+    mode: builtin
+    advertise-addresses: ['@BIND@']
+    stun-discovery: false
+java:
+  address: '@BIND@'
+  port: @GAME_PORT@
+  auth-type: offline
+motd:
+  primary-motd: 'DaimonCraft'
+  secondary-motd: 'Explore, inhabit, create'
+  passthrough-motd: true
+gameplay:
+  server-name: 'DaimonCraft'
+  enable-custom-content: true
+metrics:
+  enabled: false
+config-version: 12
