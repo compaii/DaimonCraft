@@ -15,6 +15,14 @@ spec.loader.exec_module(server)
 
 
 class DeploymentTests(unittest.TestCase):
+    def test_lost_stop_reply_is_not_replayed_or_overridden_by_signal(self):
+        class Process:
+            def terminate(self):
+                raise AssertionError("must not signal after uncertain stop")
+        with patch.object(server, "command", side_effect=["saved", ConnectionError("lost reply")]) as call, contextlib.redirect_stdout(io.StringIO()):
+            server.shutdown(Path("."), {}, Process())
+        self.assertEqual([c.args[2] for c in call.call_args_list], ["save-all flush", "stop"])
+
     def test_reprepare_retains_world_and_private_secret(self):
         config = server.settings(REPO / "server/development.example.json")
         with tempfile.TemporaryDirectory() as directory:

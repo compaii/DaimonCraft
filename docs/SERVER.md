@@ -94,9 +94,12 @@ inventory rule, border and a Bedrock discovery response. Run it after startup
 completes; a failure preserves the actual result for diagnosis.
 `command` uses authenticated RCON without printing its password. Inspect the
 owning unit journal on failure; retain the stopped world and repair forward.
-A systemd stop sends the launcher SIGTERM, which requests a normal Java shutdown
-and world save, with a 90-second grace before forced termination. Verify the
-result before claiming a clean save. Foreground Ctrl-C uses the same route.
+A systemd stop sends the launcher SIGTERM, which issues authenticated
+`save-all flush` followed by `stop` and awaits the Java exit, with a 90-second
+grace before forced termination. A lost stop reply is not replayed. If RCON
+flush is unavailable, SIGTERM is only a fallback and is not clean-save evidence.
+Verify exit status and save logs before claiming a clean save. Foreground Ctrl-C
+uses the same route.
 
 Changing config uses stop → prepare → start for this one unit. Do not reactivate
 any old identity or old shared service as a deployment dependency.
