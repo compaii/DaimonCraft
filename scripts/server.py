@@ -241,6 +241,20 @@ def verify(root, config):
             "human_gameplay_acceptance": "not established by protocol probes"}
 
 
+def shutdown(root, config, java):
+    try:
+        print(command(root, config, "save-all flush"), flush=True)
+    except (OSError, RuntimeError) as error:
+        print(f"RCON flush unavailable ({type(error).__name__}); SIGTERM fallback is not clean-save evidence.", flush=True)
+        java.terminate()
+        return
+    try:
+        print(command(root, config, "stop"), flush=True)
+    except (OSError, RuntimeError):
+        # A lost stop reply is uncertain: await this process; do not send it again.
+        print("Stop reply unavailable; awaiting the existing process outcome without replay.", flush=True)
+
+
 def run(root, config):
     with ownership(root):
         if not storage_ok(root, config):
@@ -248,16 +262,21 @@ def run(root, config):
         java = subprocess.Popen([config["java"], "-Xms1G", f"-Xmx{config['heap_mb']}M",
                                  "-Dlog4j.configurationFile=log4j2.xml", "-jar", "server.jar", "--nogui"],
                                 cwd=root, stdin=subprocess.DEVNULL)
+        stop_requested = False
         def stop(_sig=None, _frame=None):
-            java.terminate()
+            nonlocal stop_requested
+            stop_requested = True
         signal.signal(signal.SIGTERM, stop)
         signal.signal(signal.SIGINT, stop)
         next_check = 0
         while java.poll() is None:
+            if stop_requested:
+                shutdown(root, config, java)
+                break
             if time.monotonic() >= next_check:
                 if not storage_ok(root, config):
                     print("Storage threshold reached; requesting graceful world save and exit.", flush=True)
-                    java.terminate()
+                    shutdown(root, config, java)
                     break
                 next_check = time.monotonic() + 60
             time.sleep(1)
