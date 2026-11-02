@@ -1,0 +1,10 @@
+[package]
+name = "daimon-minecraft"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+daimon-harness = { path = "../harness" }
+serde_json.workspace = true

@@ -1,0 +1,188 @@
+{
+  "recovered_on": "2026-11-02",
+  "scope": "17 selected project sources; not exhaustive native conversation coverage",
+  "legacy_public_revision": "f25587eff0db22181ddb6ac289cf4db422d8f792",
+  "sources": [
+    {
+      "id": "H01",
+      "title": "Design Proposal: DaemonCraft as an Embodied Hermes Platform",
+      "kind": "public-source",
+      "reference": "docs/design/daemoncraft-platform-adapter.md",
+      "source_dates": [],
+      "sha256": "545c8878a1aa03274f38a22142cd2cd454c9b0eee6491af9676e6ac63c9031e2",
+      "bytes": 25356
+    },
+    {
+      "id": "H02",
+      "title": "Singleton Session + Event Queue Architecture (v3 \u2014 GePeTo gap addressed)",
+      "kind": "retained-project-note",
+      "reference": "architecture/singleton-session-architecture.md",
+      "source_dates": [],
+      "sha256": "cbcba9ba7e3b1a32609b3192ccfebb4a5272fe744fb8f02c89b504c51286b6a1",
+      "bytes": 8383
+    },
+    {
+      "id": "H03",
+      "title": "Session Routing: Three Contracts (v2 \u2014 GePeTo gaps addressed)",
+      "kind": "retained-project-note",
+      "reference": "architecture/session-routing-contracts.md",
+      "source_dates": [],
+      "sha256": "9b3e605e02bd346fe58ada37fc9681270dd7927d3e876895166fe59be6f9f7f9",
+      "bytes": 7873
+    },
+    {
+      "id": "H04",
+      "title": "DaemonCraft Five-Layer Embodied Stack",
+      "kind": "retained-project-note",
+      "reference": "architecture/daemoncraft-five-layer-stack.md",
+      "source_dates": [
+        "2026-05-19",
+        "2026-05-25"
+      ],
+      "sha256": "d6c808c57dc117b4fb22513f406f0f89267eb62412cda64d2ba75ce0f60c10b9",
+      "bytes": 8802
+    },
+    {
+      "id": "H05",
+      "title": "Reactive Runner \u2014 Reflex Layer Design for DaemonCraft",
+      "kind": "retained-project-note",
+      "reference": "architecture/reactive-runner-architecture.md",
+      "source_dates": [
+        "2026-05-19",
+        "2026-05-25"
+      ],
+      "sha256": "289caec555a12c36f0894d4a7976057039ad570d41cc58e16195188a7c9207e8",
+      "bytes": 20193
+    },
+    {
+      "id": "H06",
+      "title": "Embodiment Concepts from MIT Robotic Manipulation",
+      "kind": "retained-project-note",
+      "reference": "notes/embodiment-concepts.md",
+      "source_dates": [
+        "2026-04-23",
+        "2026-04-23"
+      ],
+      "sha256": "adee8706c6eaa4719eaa1f9fc3e39be75bcd001d32ef879ba46e697051fdfcbe",
+      "bytes": 3810
+    },
+    {
+      "id": "H07",
+      "title": "The Embodiment Gap \u2014 Why Bots Get Stuck and How to Fix It",
+      "kind": "retained-project-note",
+      "reference": "notes/embodiment-gap-analysis.md",
+      "source_dates": [
+        "2026-05-03",
+        "2026-05-03"
+      ],
+      "sha256": "bc70339467dc16ad2021c755dd101a9729a92b903e81d583829c958903813f57",
+      "bytes": 7105
+    },
+    {
+      "id": "H08",
+      "title": "DaemonCraft Roadmap",
+      "kind": "retained-project-note",
+      "reference": "notes/roadmap.md",
+      "source_dates": [
+        "2026-04-25"
+      ],
+      "sha256": "c604f3fbbca42fc74e60445a23fcd3a00347be8dc5b6f8ba0ec8760784ce359e",
+      "bytes": 3459
+    },
+    {
+      "id": "H09",
+      "title": "Agent Planning & Coordination \u2014 Brainstorming Notes",
+      "kind": "retained-project-note",
+      "reference": "notes/agent-planning-brainstorm.md",
+      "source_dates": [],
+      "sha256": "51d2d86c9b37893d3f6454ef369cd913941bdd73ff2f44a1544587541afbdf5d",
+      "bytes": 3133
+    },
+    {
+      "id": "H10",
+      "title": "McCompaii L4 Anti-Loop \u2014 2026-06-01/02",
+      "kind": "retained-project-note",
+      "reference": "notes/mccompaii-l4-anti-loop-2026-06-01.md",
+      "source_dates": [],
+      "sha256": "489a6c2c96d07cd441b94afd7bb2df9a1641bf82a547f95362aace117b5a6642",
+      "bytes": 6742
+    },
+    {
+      "id": "H11",
+      "title": "Audio Integration Blueprint for DaemonCraft",
+      "kind": "retained-project-note",
+      "reference": "architecture/audio-integration-blueprint.md",
+      "source_dates": [
+        "2026-05-19"
+      ],
+      "sha256": "e9cdbdcbeeca378987b2620eb0b3f7a1d59b11cecf0a07c8a174927a5cf83185",
+      "bytes": 5227
+    },
+    {
+      "id": "H12",
+      "title": "SOUL_daemoncraft \u2014 CompAII Embodied in DaemonCraft",
+      "kind": "retained-embodied-module",
+      "reference": "SOUL_daemoncraft.md",
+      "source_dates": [],
+      "sha256": "1de18ab87453150bf4587f7dc5ee985dfc40629b3b23d40a12a2141981801739",
+      "bytes": 50614
+    },
+    {
+      "id": "H13",
+      "title": "The Daemon Matrix \u2014 Distributed Embodied Intelligence Vision",
+      "kind": "retained-project-note",
+      "reference": "architecture/daemon-matrix-overview.md",
+      "source_dates": [
+        "2026-05-19"
+      ],
+      "sha256": "41042c463f136c078e198fd9813de6e0e2d4aaaf6585675713eec2396a7b8353",
+      "bytes": 5415
+    },
+    {
+      "id": "H14",
+      "title": "Fine-Tuning Ideas for Local Models",
+      "kind": "retained-project-note",
+      "reference": "notes/fine-tuning-ideas.md",
+      "source_dates": [
+        "2026-04-25",
+        "2026-04-25"
+      ],
+      "sha256": "5379de71a14c2b6e477a9568d514647870df228f439cbc4ef637b27c1f4cb0bb",
+      "bytes": 2661
+    },
+    {
+      "id": "H15",
+      "title": "Gemma-Andy Lab Loop \u2014 2026-05-16",
+      "kind": "retained-project-note",
+      "reference": "notes/gemma-andy-lab-loop-2026-05-16.md",
+      "source_dates": [
+        "2026-05-16"
+      ],
+      "sha256": "96885678643322839e451ae824e6be808c59bd2b0e30fbc92aa22dcc1fb8c405",
+      "bytes": 5740
+    },
+    {
+      "id": "H16",
+      "title": "Rolemaster Mode",
+      "kind": "retained-project-note",
+      "reference": "notes/rolemaster-mode.md",
+      "source_dates": [
+        "2026-04-25",
+        "2026-04-29"
+      ],
+      "sha256": "8421355765b770889baf526d2b0a889a8082a2ee46be9e34347c5ef51c3727e4",
+      "bytes": 8595
+    },
+    {
+      "id": "H17",
+      "title": "In-World Adventure Design",
+      "kind": "retained-project-note",
+      "reference": "notes/in-world-design.md",
+      "source_dates": [
+        "2026-04-28"
+      ],
+      "sha256": "e406a4b0495db86e08ba50e03cccbcd3e0c51d09d6f9b1528769611154da2bcb",
+      "bytes": 3166
+    }
+  ]
+}
