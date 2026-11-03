@@ -67,6 +67,18 @@ class DeploymentTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     server.settings(p)
 
+    def test_online_whitelist_requires_verified_uuid(self):
+        config = json.loads((REPO / "server/development.example.json").read_text())
+        config["online_mode"] = True
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "config.json"
+            path.write_text(json.dumps(config))
+            with self.assertRaisesRegex(ValueError, "verified online_uuids"):
+                server.settings(path)
+            config["online_uuids"] = {"Developer": "11111111-1111-4111-8111-111111111111"}
+            path.write_text(json.dumps(config))
+            self.assertTrue(server.settings(path)["online_mode"])
+
     def test_game_varint_boundaries(self):
         class Socket:
             def __init__(self, data):

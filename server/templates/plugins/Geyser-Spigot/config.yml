@@ -5,12 +5,12 @@ bedrock:
   transport: both
   signaling:
     mode: builtin
-    advertise-addresses: ['@BIND@']
+    advertise-addresses: ['@ADVERTISE_ADDRESS@']
     stun-discovery: false
 java:
   address: '@BIND@'
   port: @GAME_PORT@
-  auth-type: offline
+  auth-type: @JAVA_AUTH_TYPE@
 motd:
   primary-motd: 'DaimonCraft'
   secondary-motd: 'Explore, inhabit, create'

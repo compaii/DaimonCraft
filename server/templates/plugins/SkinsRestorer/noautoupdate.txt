@@ -1,0 +1,1 @@
+Automatic binary updates are disabled; artifact versions and hashes are managed by DaimonCraft.

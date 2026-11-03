@@ -19,11 +19,11 @@ URLs and hashes are in [artifacts.lock.json](../server/artifacts.lock.json):
 | SkinsRestorer | Skins |
 | DecentHolograms | World labels/hologram capability |
 | TAB | DaimonCraft header/footer, names and player list |
-| Geyser + ViaVersion | Bedrock bridge and protocol translation |
+| Geyser + ViaVersion + Floodgate | Bedrock bridge, Xbox authentication and protocol translation |
 | Multiverse-Core | Load and visit restored auxiliary worlds |
 | New DaimonCraft datapack | Coordinates in actionbar, preserved inventory, configurable world border (2048 by default) |
 
-All eight plugins are enabled in the current server deployment. This does not
+All nine plugins are enabled in the current server deployment. This does not
 prove successful login, rendering or usability from a human game client.
 Java status, RCON, plugin state, datapack functions and Bedrock discovery are
 separate checks from actual shared play.
@@ -90,7 +90,7 @@ sudo systemctl stop daimoncraft-server.service
 ```
 
 `status` speaks the Java server-list protocol, not just a port-open check.
-`verify` checks that protocol, all eight enabled plugins, the datapack/objectives,
+`verify` checks that protocol, all nine enabled plugins, the datapack/objectives,
 inventory rule, border and a Bedrock discovery response. Run it after startup
 completes; a failure preserves the actual result for diagnosis.
 `command` uses authenticated RCON without printing its password. Inspect the
@@ -163,3 +163,26 @@ separate from terrain and are not reactivated by a world restore.
 
 Keep only one inactive return set until human acceptance; remove that disposable
 set after acceptance. Retain a compact source/hash manifest as provenance.
+
+## Public play
+
+The private development default does not authenticate Java names. Before exposing
+game ports, set `online_mode` to true and supply `online_uuids` for every selected
+Java whitelist name, using verified Minecraft profile UUIDs. With Floodgate
+installed, set `java_auth_type` to `floodgate`: Bedrock players authenticate with
+Xbox and do not need a Java purchase. Add only selected gamertags through
+Floodgate's `fwhitelist` command; retain their resolved UUIDs in the receiving
+operator record and reconcile them after any `prepare` whitelist rewrite.
+
+Keep RCON on a private address. A receiving operator may forward only Java TCP
+and Bedrock game/signaling ports from the public interface to that private bind.
+Use a task-owned ruleset with a removal path, and tie its lifecycle to this server;
+never flush a host ruleset. Set `advertise_address` to the public game hostname
+for NetherNet signaling. Verify actual Java status and Bedrock discovery from
+another host through the public address, and verify public RCON is unreachable.
+A DNS name must resolve only to working game ingress (watch wildcard AAAA records).
+A protocol probe does not establish a successful authenticated human login.
+
+SkinsRestorer's `noautoupdate.txt` marker disables binary self-updates so the
+running plugin remains reproducible from the artifact lock. Preserve any observed
+binary drift before restoring the pinned artifact.
