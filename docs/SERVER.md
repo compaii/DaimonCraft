@@ -171,8 +171,9 @@ game ports, set `online_mode` to true and supply `online_uuids` for every select
 Java whitelist name, using verified Minecraft profile UUIDs. With Floodgate
 installed, set `java_auth_type` to `floodgate`: Bedrock players authenticate with
 Xbox and do not need a Java purchase. Add only selected gamertags through
-Floodgate's `fwhitelist` command; retain their resolved UUIDs in the receiving
-operator record and reconcile them after any `prepare` whitelist rewrite.
+Floodgate's `fwhitelist` command; retain the resolved prefixed name and UUID in
+`bedrock_whitelist` (a name-to-UUID object) in the receiving configuration, so
+future `prepare` operations preserve the admitted Xbox identity.
 
 Keep RCON on a private address. A receiving operator may forward only Java TCP
 and Bedrock game/signaling ports from the public interface to that private bind.
@@ -181,8 +182,9 @@ never flush a host ruleset. Adapt [the nft example](../server/public-network.exa
 and [its service](../server/public-network.example.service); validate with `nft -c`,
 install the selected files and enable the network unit for the game unit. Stopping
 that unit removes only its table. This does not enable the game at host boot.
-Set `advertise_address` to the public game hostname
-for NetherNet signaling. Verify actual Java status and Bedrock discovery from
+Set `advertise_address` to the public numeric IP
+for NetherNet signaling. The hostname players enter remains the stable game
+address; numeric advertised ICE candidates avoid address-family/DNS ambiguity. Verify actual Java status and Bedrock discovery from
 another host through the public address, and verify public RCON is unreachable.
 A DNS name must resolve only to working game ingress (watch wildcard AAAA records).
 A protocol probe does not establish a successful authenticated human login.

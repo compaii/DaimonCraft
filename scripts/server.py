@@ -46,6 +46,15 @@ def settings(path):
                 raise ValueError("online whitelist needs a verified online_uuids entry per name") from None
     if not re.fullmatch(r"[A-Za-z0-9.:-]+", config.get("advertise_address", config["bind"])):
         raise ValueError("invalid advertised game address")
+    for name, value in config.get("bedrock_whitelist", {}).items():
+        if not re.fullmatch(r"\.[A-Za-z0-9_]{1,16}", name):
+            raise ValueError("Bedrock whitelist name needs Floodgate's dot prefix")
+        try:
+            player_uuid = uuid.UUID(value)
+        except (ValueError, AttributeError):
+            raise ValueError("invalid Bedrock whitelist UUID") from None
+        if player_uuid.int >> 64:
+            raise ValueError("Bedrock whitelist UUID must be a Floodgate XUID identity")
     if config.get("java_auth_type", "offline") not in ("offline", "online", "floodgate"):
         raise ValueError("unsupported Geyser Java authentication type")
     if not 1024 <= config["heap_mb"] <= 8192:
@@ -149,6 +158,8 @@ def prepare(root, config):
             player_uuid = (uuid.UUID(config["online_uuids"][name]) if config["online_mode"]
                            else uuid.UUID(bytes=bytes(raw)))
             players.append({"uuid": str(player_uuid), "name": name})
+        players.extend({"uuid": str(uuid.UUID(value)), "name": name}
+                       for name, value in config.get("bedrock_whitelist", {}).items())
         write(root / "whitelist.json", json.dumps(players, indent=2))
         templates = REPO / "server/templates"
         for source in templates.rglob("*"):
