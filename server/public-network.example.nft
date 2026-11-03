@@ -1,0 +1,9 @@
+# Replace the documentation addresses/interface with the receiving bindings.
+# This owns only one named table; never flush the host ruleset.
+table ip daimoncraft_public {
+    chain ingress {
+        type nat hook prerouting priority dstnat; policy accept;
+        iifname "eth0" ip daddr 203.0.113.10 tcp dport { 25565, 19132 } dnat to 10.0.0.10
+        iifname "eth0" ip daddr 203.0.113.10 udp dport { 19132, 19133 } dnat to 10.0.0.10
+    }
+}

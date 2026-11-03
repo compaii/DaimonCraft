@@ -26,6 +26,7 @@ class DeploymentTests(unittest.TestCase):
     def test_reprepare_retains_world_and_private_secret(self):
         config = server.settings(REPO / "server/development.example.json")
         config["world_border"] = 49152
+        config["bedrock_whitelist"] = {".ExamplePlayer": "00000000-0000-0000-0009-000000000001"}
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "world").mkdir()
@@ -46,6 +47,7 @@ class DeploymentTests(unittest.TestCase):
             self.assertIn("worldborder set 49152", (root / "world/datapacks/daimoncraft/data/daimoncraft/function/load.mcfunction").read_text())
             whitelist = json.loads((root / "whitelist.json").read_text())
             self.assertEqual(whitelist[0]["name"], "Developer")
+            self.assertEqual(whitelist[1], {"name": ".ExamplePlayer", "uuid": "00000000-0000-0000-0009-000000000001"})
             self.assertIn("white-list=true", (root / "server.properties").read_text())
             tab = (root / "plugins/TAB/config.yml").read_text()
             self.assertIn("&a&lDaimonCraft", tab)
@@ -66,6 +68,18 @@ class DeploymentTests(unittest.TestCase):
                 p.write_text(json.dumps(dict(config, bind=address)))
                 with self.assertRaises(ValueError):
                     server.settings(p)
+
+    def test_online_whitelist_requires_verified_uuid(self):
+        config = json.loads((REPO / "server/development.example.json").read_text())
+        config["online_mode"] = True
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "config.json"
+            path.write_text(json.dumps(config))
+            with self.assertRaisesRegex(ValueError, "verified online_uuids"):
+                server.settings(path)
+            config["online_uuids"] = {"Developer": "11111111-1111-4111-8111-111111111111"}
+            path.write_text(json.dumps(config))
+            self.assertTrue(server.settings(path)["online_mode"])
 
     def test_game_varint_boundaries(self):
         class Socket:

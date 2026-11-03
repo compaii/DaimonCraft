@@ -38,8 +38,25 @@ def settings(path):
     for name in config["whitelist"]:
         if not re.fullmatch(r"[A-Za-z0-9_]{1,16}", name):
             raise ValueError("invalid player name")
-    if config["online_mode"] and config["whitelist"]:
-        raise ValueError("online UUID resolution is not configured; use an empty initial whitelist")
+    if config["online_mode"]:
+        for name in config["whitelist"]:
+            try:
+                uuid.UUID(config.get("online_uuids", {})[name])
+            except (KeyError, ValueError, AttributeError):
+                raise ValueError("online whitelist needs a verified online_uuids entry per name") from None
+    if not re.fullmatch(r"[A-Za-z0-9.:-]+", config.get("advertise_address", config["bind"])):
+        raise ValueError("invalid advertised game address")
+    for name, value in config.get("bedrock_whitelist", {}).items():
+        if not re.fullmatch(r"\.[A-Za-z0-9_]{1,16}", name):
+            raise ValueError("Bedrock whitelist name needs Floodgate's dot prefix")
+        try:
+            player_uuid = uuid.UUID(value)
+        except (ValueError, AttributeError):
+            raise ValueError("invalid Bedrock whitelist UUID") from None
+        if player_uuid.int >> 64:
+            raise ValueError("Bedrock whitelist UUID must be a Floodgate XUID identity")
+    if config.get("java_auth_type", "offline") not in ("offline", "online", "floodgate"):
+        raise ValueError("unsupported Geyser Java authentication type")
     if not 1024 <= config["heap_mb"] <= 8192:
         raise ValueError("heap_mb outside development bounds")
     if not 1 <= config["data_limit_gib"] <= 32 or config["free_reserve_gib"] < 2:
@@ -138,13 +155,19 @@ def prepare(root, config):
             raw = bytearray(hashlib.md5(("OfflinePlayer:" + name).encode()).digest())
             raw[6] = raw[6] & 0x0f | 0x30
             raw[8] = raw[8] & 0x3f | 0x80
-            players.append({"uuid": str(uuid.UUID(bytes=bytes(raw))), "name": name})
+            player_uuid = (uuid.UUID(config["online_uuids"][name]) if config["online_mode"]
+                           else uuid.UUID(bytes=bytes(raw)))
+            players.append({"uuid": str(player_uuid), "name": name})
+        players.extend({"uuid": str(uuid.UUID(value)), "name": name}
+                       for name, value in config.get("bedrock_whitelist", {}).items())
         write(root / "whitelist.json", json.dumps(players, indent=2))
         templates = REPO / "server/templates"
         for source in templates.rglob("*"):
             if source.is_file():
                 content = source.read_text().replace("@BIND@", config["bind"])
                 content = content.replace("@WORLD_BORDER@", str(config["world_border"]))
+                content = content.replace("@JAVA_AUTH_TYPE@", config.get("java_auth_type", "offline"))
+                content = content.replace("@ADVERTISE_ADDRESS@", config.get("advertise_address", config["bind"]))
                 content = content.replace("@BEDROCK_PORT@", str(config["bedrock_port"]))
                 content = content.replace("@BEDROCK_WEBRTC_PORT@", str(config["bedrock_webrtc_port"]))
                 content = content.replace("@GAME_PORT@", str(config["port"]))
@@ -228,7 +251,9 @@ def verify(root, config):
         raise RuntimeError("one or more required plugins are not enabled")
     checks = {
         "datapack": "file/daimoncraft" in command(root, config, "datapack list enabled"),
-        "coordinates": all(name in command(root, config, "scoreboard objectives list") for name in ("dc_x", "dc_y", "dc_z")),
+        "coordinates": all("Unknown scoreboard objective" not in command(
+            root, config, f"scoreboard players get #daimoncraft_health {name}")
+            for name in ("dc_x", "dc_y", "dc_z")),
         "keep_inventory": "true" in command(root, config, "gamerule keep_inventory"),
         "world_border": str(config["world_border"]) in command(root, config, "worldborder get"),
     }
