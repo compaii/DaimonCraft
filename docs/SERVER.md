@@ -20,9 +20,10 @@ URLs and hashes are in [artifacts.lock.json](../server/artifacts.lock.json):
 | DecentHolograms | World labels/hologram capability |
 | TAB | DaimonCraft header/footer, names and player list |
 | Geyser + ViaVersion | Bedrock bridge and protocol translation |
-| New DaimonCraft datapack | Coordinates in actionbar, preserved inventory, 2048-block world border |
+| Multiverse-Core | Load and visit restored auxiliary worlds |
+| New DaimonCraft datapack | Coordinates in actionbar, preserved inventory, configurable world border (2048 by default) |
 
-All seven plugins are enabled in the current server deployment. This does not
+All eight plugins are enabled in the current server deployment. This does not
 prove successful login, rendering or usability from a human game client.
 Java status, RCON, plugin state, datapack functions and Bedrock discovery are
 separate checks from actual shared play.
@@ -89,7 +90,7 @@ sudo systemctl stop daimoncraft-server.service
 ```
 
 `status` speaks the Java server-list protocol, not just a port-open check.
-`verify` checks that protocol, all seven enabled plugins, the datapack/objectives,
+`verify` checks that protocol, all eight enabled plugins, the datapack/objectives,
 inventory rule, border and a Bedrock discovery response. Run it after startup
 completes; a failure preserves the actual result for diagnosis.
 `command` uses authenticated RCON without printing its password. Inspect the
@@ -140,3 +141,25 @@ installing a server cannot turn on a player's shader or Fabric mod.
 Their old manifest is retained as design evidence. Rebuilding a matching client
 pack is a separate slice after this server-only task. No old client binaries,
 caches, world copies, NPC cast or script engine were imported into this stack.
+
+## Restoring an existing world
+
+Use a stopped, cleanly saved source and checksum-verify the selected world files
+before activation. Preserve the current receiving worlds once as the return copy;
+never merge region files from different worlds. Keep the source unchanged. Stop
+the receiving unit through its RCON-aware lifecycle before replacing directories.
+Run `prepare` after replacement to install the current managed datapack, then
+start and `verify`. The optional `world_border` setting is an even diameter
+(default 2048); `max-world-size` uses half that diameter. Set it large enough for
+all imported regions before startup. A larger border does not pregenerate terrain;
+the existing storage threshold still stops growth.
+
+Multiverse-Core is pinned for preserved auxiliary worlds. Import existing folders
+with `mv import lobby normal` and `mv import testworld normal`, verify `mv list`,
+and keep their auto-load registrations. Do not import retired agent runtimes or
+blindly overwrite current plugin configuration. Hologram definitions may be moved
+separately with their owning plugin. NPC scripts and old Hermes integrations are
+separate from terrain and are not reactivated by a world restore.
+
+Keep only one inactive return set until human acceptance; remove that disposable
+set after acceptance. Retain a compact source/hash manifest as provenance.
