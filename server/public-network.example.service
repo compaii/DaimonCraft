@@ -1,0 +1,17 @@
+# Replace /srv/daimoncraft with the receiving state directory.
+# Install the selected nft rules as /etc/daimoncraft-public.nft.
+[Unit]
+Description=DaimonCraft public game ports (RCON remains private)
+Requires=daimoncraft-server.service
+After=daimoncraft-server.service
+PartOf=daimoncraft-server.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=/usr/bin/grep -qx online-mode=true /srv/daimoncraft/server.properties
+ExecStart=/usr/sbin/nft -f /etc/daimoncraft-public.nft
+ExecStop=/usr/sbin/nft delete table ip daimoncraft_public
+
+[Install]
+WantedBy=daimoncraft-server.service

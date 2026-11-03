@@ -177,7 +177,11 @@ operator record and reconcile them after any `prepare` whitelist rewrite.
 Keep RCON on a private address. A receiving operator may forward only Java TCP
 and Bedrock game/signaling ports from the public interface to that private bind.
 Use a task-owned ruleset with a removal path, and tie its lifecycle to this server;
-never flush a host ruleset. Set `advertise_address` to the public game hostname
+never flush a host ruleset. Adapt [the nft example](../server/public-network.example.nft)
+and [its service](../server/public-network.example.service); validate with `nft -c`,
+install the selected files and enable the network unit for the game unit. Stopping
+that unit removes only its table. This does not enable the game at host boot.
+Set `advertise_address` to the public game hostname
 for NetherNet signaling. Verify actual Java status and Bedrock discovery from
 another host through the public address, and verify public RCON is unreachable.
 A DNS name must resolve only to working game ingress (watch wildcard AAAA records).
