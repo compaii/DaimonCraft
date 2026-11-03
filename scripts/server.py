@@ -44,6 +44,9 @@ def settings(path):
         raise ValueError("heap_mb outside development bounds")
     if not 1 <= config["data_limit_gib"] <= 32 or config["free_reserve_gib"] < 2:
         raise ValueError("invalid storage bounds")
+    border = config.setdefault("world_border", 2048)
+    if not isinstance(border, int) or border % 2 or not 2048 <= border <= 60000000:
+        raise ValueError("world_border must be an even diameter from 2048 to 60000000")
     return config
 
 
@@ -121,7 +124,7 @@ def prepare(root, config):
             "enforce-whitelist": str(bool(config["whitelist"])).lower(),
             "spawn-protection": 0, "allow-flight": "true", "enable-command-block": "true",
             "max-players": 10, "view-distance": 10, "simulation-distance": 6,
-            "level-name": "world", "level-seed": config["seed"], "max-world-size": 1024,
+            "level-name": "world", "level-seed": config["seed"], "max-world-size": config["world_border"] // 2,
             "enable-rcon": "true", "rcon.port": config["rcon_port"], "rcon.password": password,
             "broadcast-rcon-to-ops": "false", "enable-query": "false",
             "sync-chunk-writes": "true", "max-tick-time": 60000,
@@ -141,6 +144,7 @@ def prepare(root, config):
         for source in templates.rglob("*"):
             if source.is_file():
                 content = source.read_text().replace("@BIND@", config["bind"])
+                content = content.replace("@WORLD_BORDER@", str(config["world_border"]))
                 content = content.replace("@BEDROCK_PORT@", str(config["bedrock_port"]))
                 content = content.replace("@BEDROCK_WEBRTC_PORT@", str(config["bedrock_webrtc_port"]))
                 content = content.replace("@GAME_PORT@", str(config["port"]))
@@ -150,7 +154,7 @@ def prepare(root, config):
                     content = re.sub(r"(?ms)^header-footer:\n.*?(?=^[a-z][\w-]*:\n|\Z)",
                                      lambda _match: content + "\n", defaults, count=1)
                 write(root / source.relative_to(templates), content)
-        print("Prepared pinned server and seven plugins; existing world retained.")
+        print("Prepared pinned server and locked plugins; existing world retained.")
 
 
 def exact(sock, count):
@@ -226,7 +230,7 @@ def verify(root, config):
         "datapack": "file/daimoncraft" in command(root, config, "datapack list enabled"),
         "coordinates": all(name in command(root, config, "scoreboard objectives list") for name in ("dc_x", "dc_y", "dc_z")),
         "keep_inventory": "true" in command(root, config, "gamerule keep_inventory"),
-        "world_border": "2048" in command(root, config, "worldborder get"),
+        "world_border": str(config["world_border"]) in command(root, config, "worldborder get"),
     }
     magic = bytes.fromhex("00ffff00fefefefefdfdfdfd12345678")
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:

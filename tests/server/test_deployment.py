@@ -25,6 +25,7 @@ class DeploymentTests(unittest.TestCase):
 
     def test_reprepare_retains_world_and_private_secret(self):
         config = server.settings(REPO / "server/development.example.json")
+        config["world_border"] = 49152
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "world").mkdir()
@@ -41,6 +42,8 @@ class DeploymentTests(unittest.TestCase):
             self.assertEqual((root / ".rcon-password").read_bytes(), password)
             self.assertEqual((root / ".rcon-password").stat().st_mode & 0o777, 0o600)
             self.assertEqual((root / "world/level.dat").read_bytes(), original)
+            self.assertIn("max-world-size=24576", (root / "server.properties").read_text())
+            self.assertIn("worldborder set 49152", (root / "world/datapacks/daimoncraft/data/daimoncraft/function/load.mcfunction").read_text())
             whitelist = json.loads((root / "whitelist.json").read_text())
             self.assertEqual(whitelist[0]["name"], "Developer")
             self.assertIn("white-list=true", (root / "server.properties").read_text())

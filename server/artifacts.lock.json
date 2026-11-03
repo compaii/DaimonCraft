@@ -65,6 +65,14 @@
       "destination": "plugins/ViaVersion.jar",
       "url": "https://cdn.modrinth.com/data/P1OZGk5p/versions/Fkfcr89K/ViaVersion-5.12.2.jar",
       "sha512": "c6af11f50e14bc1ba239f5a90be653cce85feee30c473a4b53336b4d5527d790369cf43843f7cb06d3ac3a34fc207e7203436737ca719070644101472453401b"
+    },
+    {
+      "name": "Multiverse-Core",
+      "version": "5.8.2",
+      "modrinth_version": "de7TbcZG",
+      "destination": "plugins/Multiverse-Core.jar",
+      "url": "https://cdn.modrinth.com/data/3wmN97b8/versions/de7TbcZG/multiverse-core-5.8.2.jar",
+      "sha512": "1165c96755229583477d120485b49ddf731f44a97e17b99f955892e8e90d1f6b24d2e06bd15b6fc4240197c32970592a2af2febe31044afed949dc2d722d17a8"
     }
   ]
 }
